@@ -1,0 +1,50 @@
+<div class="todo-app">
+  <h2 class="todo-title">Todo List Tracker</h2>
+
+  <!-- Note: Add logic in app.component.ts to make this interactive. This template provides structure. -->
+
+  <form
+    class="todo-form"
+    (submit)="$event.preventDefault(); addTodo(input.value); input.value = ''"
+  >
+    <input #input type="text" placeholder="Add a new todo" class="todo-input" />
+    <button type="submit" class="todo-add-btn">Add</button>
+  </form>
+
+  <div class="todo-list-container">
+    @if (todos.length) {
+      <ul class="todo-list">
+        @for (todo of todos; track todo) {
+          <li class="todo-item">
+            <input type="checkbox" [(ngModel)]="todo.done" />
+            <span
+              [style.textDecoration]="todo.done ? 'line-through' : 'none'"
+              class="todo-text"
+              >{{ todo.text }}</span
+            >
+            <button (click)="remove($index)" class="todo-remove-btn">
+              Remove
+            </button>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="todo-empty">No todos yet. Add one above.</p>
+    }
+    <div class="todo-footer">
+      <small>{{ todos?.length }} items</small>
+      <button (click)="clearCompleted()" class="todo-clear-btn">
+        Clear completed
+      </button>
+    </div>
+  </div>
+</div>
+
+<!--
+	Notes for developer: The template expects the component class to expose:
+	- todos: Array<{ text: string; done: boolean }>
+	- addTodo(text: string)
+	- remove(index: number)
+	- clearCompleted()
+	and FormsModule to be imported for ngModel.
+-->
